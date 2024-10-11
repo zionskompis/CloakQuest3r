@@ -172,3 +172,51 @@ Contributions and feature requests are welcome! If you encounter any issues or h
 <img width="100%" align="centre" src="https://cdn.discordapp.com/attachments/1141162711464550430/1185878687820828742/Screenshot_2023-12-16_at_4.51.45_PM.png" />
 -->
 <h4 align="center"> If you find this GitHub repo useful, please consider giving it a star! ⭐️ </h4> 
+
+### @zionskompis - new 
+```
+- script takes file path as input "/path/to/targets.txt"
+-- targets.txt > line syntax: "https://subdomain.target.com"
+
+- removed inputs after start
+
+- default_wordlist = "/usr/share/seclists/Discovery/DNS/deepmagic.com-prefixes-top500.txt"
+```
+### example output
+```
+
+[+] Checking:  REDACTED
+
+[!] Checking if the website uses Cloudflare
+ 
+- Website is not using Cloudflare.
+ 
+[+] Website is using:  UploadServer
+ 
+-------------
+ 
+[+] Checking: REDACTED
+ 
+[!] Checking if the website uses Cloudflare
+ 
+ 
+[+] Historical IP Address Info from SecurityTrails for REDACTED:
+ 
+ [+] IP Address: REDACTED                                
+  └➤ First Seen: 2024-04-13
+  └➤ Last Seen: 2024-10-11        
+  └➤ Organizations: Cloudflare, Inc.
+                                  
+ [+] IP Address: REDACTED         
+  └➤ First Seen: 2023-12-08                          
+  └➤ Last Seen: 2024-04-13        
+  └➤ Organizations: Cloudflare, Inc.
+ 
+ [+] IP Address: REDACTED   
+  └➤ First Seen: 2018-12-16
+  └➤ Last Seen: 2018-12-19
+  └➤ Organizations: IT Service Provider located in Nuernberg, Germany
+ 
+[+] Scanning for subdomains.
+
+```
