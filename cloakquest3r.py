@@ -28,12 +28,7 @@ W = '\033[0m'  # white
 Y = '\033[33m'  # yellow
 
 banner = r'''
-   ___ _             _      ____                 _   _____
-  / __\ | ___   __ _| | __ /___ \_   _  ___  ___| |_|___ / _ __
- / /  | |/ _ \ / _` | |/ ///  / / | | |/ _ \/ __| __| |_ \| '__|
-/ /___| | (_) | (_| |   </ \_/ /| |_| |  __/\__ \ |_ ___) | |
-\____/|_|\___/ \__,_|_|\_\___,_\ \__,_|\___||___/\__|____/|_|
-Uncover the true IP address of websites safeguarded by Cloudflare & ohers.
+"----------"
 '''
 
 init()
@@ -42,14 +37,7 @@ def print_banners():
     """
     prints the program banners
     """
-    print(f'{R}{banner}{W}\n')
-    print(f'{G}[+] {Y}Version      : {W}{VERSION}')
-    print(f'{G}[+] {Y}Created By   : {W}Spyboy')
-    print(f'{G} \u2514\u27A4 {Y}Twitter      : {W}{twitter_url}')
-    print(f'{G} \u2514\u27A4 {Y}Discord      : {W}{discord}')
-    print(f'{G} \u2514\u27A4 {Y}Website      : {W}{website}')
-    print(f'{G} \u2514\u27A4 {Y}Blog         : {W}{blog}')
-    print(f'{G} \u2514\u27A4 {Y}Github       : {W}{github}\n')
+    print('-------------')
 
 def is_using_cloudflare(domain):
     try:
@@ -82,10 +70,10 @@ default_wordlist = "wordlist.txt"
 updated_wordlist = "wordlist.txt"
 
 def download_wordlist(wordlist_path):
-    print(f"\n{Fore.GREEN}[+] {C}Downloading an updated wordlist from {Fore.GREEN}SecLists{Fore.RESET}")
+    #print(f"\n{Fore.GREEN}[+] {C}Downloading an updated wordlist from {Fore.GREEN}SecLists{Fore.RESET}")
     try:
         urllib.request.urlretrieve(wordlist_url, wordlist_path)
-        print(f"{Fore.GREEN}[+] {C}Wordlist downloaded successfully as {Fore.GREEN}{wordlist_path}{Fore.RESET}")
+        #print(f"{Fore.GREEN}[+] {C}Wordlist downloaded successfully as {Fore.GREEN}{wordlist_path}{Fore.RESET}")
     except Exception as e:
         print(f"{Fore.RED}[!] {C}Error downloading wordlist: {Fore.RED}{e}{Fore.RESET}")
         print(f"{Fore.GREEN}[+] {C}Using the existing wordlist {Fore.GREEN}{updated_wordlist}{Fore.RESET}")
@@ -135,17 +123,13 @@ def find_subdomains_with_ssl_analysis(domain, wordlist_path=None, timeout=20):
                 pass
 
     if wordlist_path is None:
-        default_wordlist = "wordlist.txt"
-        wordlist_path = input(f"\n{Fore.CYAN}> Do you have a custom wordlist for subdomain scanning? {Fore.GREEN}(yes/no): ").lower()
-        if wordlist_path == "yes":
-            wordlist_path = input(f"\n{Fore.CYAN}> Enter the path to your custom wordlist: {Fore.GREEN}")
-        else:
-            wordlist_path = default_wordlist
+        default_wordlist = "/usr/share/seclists/Discovery/DNS/deepmagic.com-prefixes-top500.txt"
+        wordlist_path = default_wordlist
 
     with open(wordlist_path, "r") as file:
         subdomains = [line.strip() for line in file.readlines()]
 
-    print(f"\n{Fore.YELLOW}Starting threads...")
+    #print(f"\n{Fore.YELLOW}Starting threads...")
     start_time = time.time()
 
     threads = []
@@ -159,9 +143,9 @@ def find_subdomains_with_ssl_analysis(domain, wordlist_path=None, timeout=20):
 
     end_time = time.time()
     elapsed_time = end_time - start_time
-    print(f"\n{G} \u2514\u27A4 {C}Total Subdomains Scanned:{W} {len(subdomains)}")
+    #print(f"\n{G} \u2514\u27A4 {C}Total Subdomains Scanned:{W} {len(subdomains)}")
     print(f"{G} \u2514\u27A4 {C}Total Subdomains Found:{W} {len(subdomains_found)}")
-    print(f"{G} \u2514\u27A4 {C}Time taken:{W} {elapsed_time:.2f} seconds")
+    #print(f"{G} \u2514\u27A4 {C}Time taken:{W} {elapsed_time:.2f} seconds")
 
     real_ips = []
 
@@ -266,14 +250,7 @@ def get_domain_historical_ip_address(domain):
     except:
         None
 
-if __name__ == "__main__":
-    #domain = sys.argv[1]
-
-    if len(sys.argv) < 2:
-        print("Usage: python3 cloakquest3r.py <domain>")
-        sys.exit(1)
-
-    domain = sys.argv[1]
+def setup_start(domain):
     
     # Extract domain if a full URL is provided
     parsed_url = urlparse(domain)
@@ -283,12 +260,13 @@ if __name__ == "__main__":
     filename = "wordlist.txt"
     print_banners()
     CloudFlare_IP = get_real_ip(domain)
+    print("\n[+] Checking: ",domain)
 
     print(f"\n{Fore.GREEN}[!] {C}Checking if the website uses Cloudflare{Fore.RESET}\n")
 
     if is_using_cloudflare(domain):
-        print(f"\n{R}Target Website: {W}{domain}")
-        print(f"{R}Visible IP Address: {W}{CloudFlare_IP}\n")
+        #   print(f"\n{R}Target Website: {W}{domain}")
+        #print(f"{R}Visible IP Address: {W}{CloudFlare_IP}\n")
         get_domain_historical_ip_address(domain)
         securitytrails_historical_ip_address(domain)
         print(f"\n{Fore.GREEN}[+] {Fore.YELLOW}Scanning for subdomains.{Fore.RESET}")
@@ -301,7 +279,7 @@ if __name__ == "__main__":
         technology = detect_web_server(domain)
         print(f"\n{Fore.GREEN}[+] {C}Website is using: {Fore.GREEN} {technology}")
 
-        proceed = input(f"\n{Fore.YELLOW}> Do you want to proceed? {Fore.GREEN}(yes/no): ").lower()
+        proceed = "No"# input(f"\n{Fore.YELLOW}> Do you want to proceed? {Fore.GREEN}(yes/no): ").lower()
 
         if proceed == "yes":
             print(f"\n{R}Target Website: {W}{domain}")
@@ -314,4 +292,16 @@ if __name__ == "__main__":
                 download_wordlist(default_wordlist)
             find_subdomains_with_ssl_analysis(domain)
         else:
-            print(f"{R}Operation aborted. Exiting...{W}")
+            print("\n")
+
+if __name__ == "__main__":
+    #domain = sys.argv[1]
+
+    if len(sys.argv) < 2:
+        print("Usage: python3 cloakquest3r.py file")
+        sys.exit(1)
+    file = open(sys.argv[1])
+    for domain in file:
+        setup_start(domain)
+
+
